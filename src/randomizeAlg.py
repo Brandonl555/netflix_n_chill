@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import copy
 import sys
 class randomizer:
 
@@ -15,10 +16,10 @@ class randomizer:
         self.data = pd.read_csv(self.moviePath)
 
         #print(self.data['Genre'])
-        if self.genreParam in self.data['Genre']: #TODO -> not properly checking for the genre
-            #mySubstring =
-            self.data.filter(regex=self.genreParam, axis = 1)
-            currSample = self.data.sample()
+        if self.genreParam: #TODO -> not properly checking for the genre
+            dataCopy = copy.deepcopy(self.data)
+            dataCopy.filter(regex=self.genreParam, axis = 1)
+            currSample = dataCopy.sample()
             print(currSample['Title'])
             print(currSample['Genre'])
             print("Filtered by: " + self.genreParam)
@@ -31,7 +32,7 @@ params = sys.argv
 #sanity check
 #print(len(sys.argv))
 #print(sys.argv)
-if len(sys.argv) > 1:
+if len(params) > 1:
     rd = randomizer("C:/Users/jungl/Downloads/personal_software_projs/netflix_n_chill/Data/allMovieData.csv", params[1])
 else:
     rd = randomizer("C:/Users/jungl/Downloads/personal_software_projs/netflix_n_chill/Data/allMovieData.csv")
